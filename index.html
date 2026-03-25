@@ -7,8 +7,40 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <!-- Pairing Screen -->
+  <div id="pair-screen" class="container">
     <h1 class="title">TV Remote</h1>
+    <p class="subtitle">Connect your devices</p>
+
+    <div class="pair-actions">
+      <button id="create-room-btn" class="pair-btn primary">Create Room</button>
+      <button id="join-room-btn" class="pair-btn secondary">Join Room</button>
+    </div>
+
+    <!-- Create Room result -->
+    <div id="create-result" class="pair-result hidden">
+      <p>Your room PIN:</p>
+      <div id="pin-display" class="pin-display"></div>
+      <p class="pin-hint">Share this PIN with other devices</p>
+    </div>
+
+    <!-- Join Room form -->
+    <div id="join-form" class="pair-form hidden">
+      <input type="text" id="pin-input" placeholder="Enter 6-digit PIN" maxlength="6" autocomplete="off">
+      <button id="join-btn" class="pair-btn primary">Connect</button>
+      <p id="join-error" class="error-msg hidden"></p>
+    </div>
+  </div>
+
+  <!-- Main Remote Screen -->
+  <div id="remote-screen" class="container hidden">
+    <div class="header">
+      <h1 class="title">TV Remote</h1>
+      <div class="header-right">
+        <span id="room-pin-label" class="room-label"></span>
+        <button id="unpair-btn" class="unpair-btn">Unpair</button>
+      </div>
+    </div>
 
     <div class="add-form">
       <input type="text" id="channel-name" placeholder="Channel Name" autocomplete="off">
@@ -21,6 +53,9 @@
     <p id="empty-msg" class="empty-msg">No channels yet. Add one above!</p>
   </div>
 
+  <!-- Firebase SDK (compat for simpler CDN usage) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

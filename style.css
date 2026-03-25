@@ -17,17 +17,170 @@ body {
   padding: 24px 16px;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .title {
   text-align: center;
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 24px;
   color: #fff;
   letter-spacing: 1px;
   text-shadow: 0 0 12px rgba(100, 140, 255, 0.4);
 }
 
-/* Add form */
+/* ── Pairing Screen ── */
+#pair-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.subtitle {
+  color: #888;
+  margin-top: 8px;
+  margin-bottom: 32px;
+  font-size: 15px;
+}
+
+.pair-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pair-btn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.pair-btn.primary {
+  background: #5b7fff;
+  color: #fff;
+}
+
+.pair-btn.primary:hover {
+  background: #4a6be0;
+}
+
+.pair-btn.secondary {
+  background: #2a2a3a;
+  color: #ccc;
+  border: 1px solid #3a3a4a;
+}
+
+.pair-btn.secondary:hover {
+  background: #3a3a4a;
+}
+
+.pair-btn:active {
+  transform: scale(0.96);
+}
+
+.pair-result {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.pair-result p {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.pin-display {
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: 12px;
+  color: #5b7fff;
+  margin: 12px 0;
+  text-shadow: 0 0 20px rgba(91, 127, 255, 0.5);
+}
+
+.pin-hint {
+  color: #666 !important;
+  font-size: 13px !important;
+}
+
+.pair-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.pair-form input {
+  width: 220px;
+  padding: 12px 16px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 6px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pair-form input:focus {
+  border-color: #5b7fff;
+}
+
+.error-msg {
+  color: #ff5555;
+  font-size: 13px;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header .title {
+  font-size: 22px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.room-label {
+  color: #5b7fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.unpair-btn {
+  padding: 6px 14px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: none;
+  color: #999;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.unpair-btn:hover {
+  color: #ff5555;
+  border-color: #ff5555;
+}
+
+/* ── Add form ── */
 .add-form {
   display: flex;
   gap: 8px;
@@ -75,7 +228,7 @@ body {
   transform: scale(0.96);
 }
 
-/* Channel grid */
+/* ── Channel grid ── */
 .channels-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -112,6 +265,19 @@ body {
   transform: scale(0.97);
 }
 
+.channel-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.channel-name {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
 .delete-btn {
   position: absolute;
   top: 4px;
@@ -136,21 +302,7 @@ body {
   color: #ff5555;
 }
 
-/* Thumbnail */
-.channel-thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  object-fit: cover;
-  margin-bottom: 6px;
-}
-
-.channel-name {
-  font-size: 13px;
-  line-height: 1.2;
-}
-
-/* Empty state */
+/* ── Empty state ── */
 .empty-msg {
   text-align: center;
   color: #555;
@@ -158,11 +310,7 @@ body {
   margin-top: 40px;
 }
 
-.empty-msg.hidden {
-  display: none;
-}
-
-/* Extension popup sizing */
+/* ── Responsive / Extension popup ── */
 @media (max-width: 400px) {
   .container {
     padding: 16px 12px;
@@ -174,5 +322,9 @@ body {
 
   .channels-grid {
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+
+  .pair-actions {
+    flex-direction: column;
   }
 }
