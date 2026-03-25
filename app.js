@@ -96,9 +96,28 @@ function render(channels) {
     const btn = document.createElement('a');
     btn.className = 'channel-btn';
     btn.href = ch.link;
-    btn.target = '_blank';
-    btn.rel = 'noopener';
     btn.title = ch.link;
+
+    // Extension: navigate the active tab instead of opening a new one
+    if (typeof chrome !== 'undefined' && chrome.tabs) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          const tab = tabs.find(t => !t.url.startsWith('chrome-extension://'));
+          if (tab) {
+            chrome.tabs.update(tab.id, { url: ch.link });
+          } else {
+            chrome.tabs.create({ url: ch.link });
+          }
+        });
+      });
+    } else {
+      // Webapp: same tab
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(ch.link, '_self');
+      });
+    }
 
     if (ch.thumb) {
       const img = document.createElement('img');
