@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TV Remote</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">TV Remote</h1>
+
+    <div class="add-form">
+      <input type="text" id="channel-name" placeholder="Channel Name" autocomplete="off">
+      <input type="url" id="channel-link" placeholder="https://..." autocomplete="off">
+      <button id="add-btn">+ Add</button>
+    </div>
+
+    <div id="channels" class="channels-grid"></div>
+
+    <p id="empty-msg" class="empty-msg">No channels yet. Add one above!</p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

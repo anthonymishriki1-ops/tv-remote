@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f0f0f;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(100, 140, 255, 0.4);
+}
+
+/* Add form */
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.add-form input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-form input:focus {
+  border-color: #5b7fff;
+}
+
+.add-form input::placeholder {
+  color: #666;
+}
+
+#add-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #5b7fff;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#add-btn:hover {
+  background: #4a6be0;
+}
+
+#add-btn:active {
+  transform: scale(0.96);
+}
+
+/* Channel grid */
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.channel-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px 12px;
+  border-radius: 12px;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3a;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  word-break: break-word;
+}
+
+.channel-btn:hover {
+  background: #2a2a4a;
+  box-shadow: 0 0 16px rgba(91, 127, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.channel-btn:active {
+  transform: scale(0.97);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.channel-btn:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  color: #ff5555;
+}
+
+/* Thumbnail */
+.channel-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.channel-name {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+/* Empty state */
+.empty-msg {
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+  margin-top: 40px;
+}
+
+.empty-msg.hidden {
+  display: none;
+}
+
+/* Extension popup sizing */
+@media (max-width: 400px) {
+  .container {
+    padding: 16px 12px;
+  }
+
+  .add-form {
+    flex-direction: column;
+  }
+
+  .channels-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+}
