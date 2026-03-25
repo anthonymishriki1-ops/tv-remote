@@ -1,40 +1,39 @@
-// Content script: auto-play and fullscreen videos on streaming sites
+// Content script: auto-play, fullscreen, and remote controls for streaming sites
 (function () {
+  // ── Auto-play & fullscreen on page load ──
   let attempts = 0;
-  const maxAttempts = 30; // try for 15 seconds
+  const maxAttempts = 30;
 
-  function tryAutoPlay() {
+  function getMainVideo() {
     const videos = document.querySelectorAll('video');
-
     for (const video of videos) {
-      // Skip tiny/hidden videos (ads, thumbnails)
       if (video.offsetWidth < 200 || video.offsetHeight < 100) continue;
-
-      // Play if paused
-      if (video.paused) {
-        video.muted = true; // browsers require muted for autoplay
-        video.play().then(() => {
-          // Unmute after play starts
-          setTimeout(() => { video.muted = false; }, 500);
-        }).catch(() => {});
-      }
-
-      // Request fullscreen on the video or its container
-      const container = video.closest('[class*="player"]') || video.parentElement || video;
-      if (!document.fullscreenElement) {
-        container.requestFullscreen().catch(() => {
-          // Try the video itself
-          video.requestFullscreen().catch(() => {});
-        });
-      }
-
-      return true; // found a video
+      return video;
     }
-
-    return false;
+    return videos[0] || null;
   }
 
-  // Also look for play buttons and click them
+  function tryAutoPlay() {
+    const video = getMainVideo();
+    if (!video) return false;
+
+    if (video.paused) {
+      video.muted = true;
+      video.play().then(() => {
+        setTimeout(() => { video.muted = false; }, 500);
+      }).catch(() => {});
+    }
+
+    const container = video.closest('[class*="player"]') || video.parentElement || video;
+    if (!document.fullscreenElement) {
+      container.requestFullscreen().catch(() => {
+        video.requestFullscreen().catch(() => {});
+      });
+    }
+
+    return true;
+  }
+
   function tryClickPlay() {
     const playSelectors = [
       'button[aria-label*="Play"]',
@@ -62,19 +61,52 @@
     if (attempts > maxAttempts) return;
 
     const found = tryAutoPlay();
-    if (!found) {
-      tryClickPlay();
-    }
-
-    if (!found && attempts <= maxAttempts) {
-      setTimeout(poll, 500);
-    }
+    if (!found) tryClickPlay();
+    if (!found && attempts <= maxAttempts) setTimeout(poll, 500);
   }
 
-  // Wait for page to settle before trying
   if (document.readyState === 'complete') {
     setTimeout(poll, 1500);
   } else {
     window.addEventListener('load', () => setTimeout(poll, 1500));
   }
+
+  // ── Listen for remote control messages ──
+  chrome.runtime.onMessage.addListener((msg) => {
+    const video = getMainVideo();
+    if (!video) return;
+
+    switch (msg.action) {
+      case 'vol-up':
+        video.volume = Math.min(1, video.volume + 0.1);
+        break;
+
+      case 'vol-down':
+        video.volume = Math.max(0, video.volume - 0.1);
+        break;
+
+      case 'mute':
+        video.muted = !video.muted;
+        break;
+
+      case 'play-pause':
+        if (video.paused) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+        break;
+
+      case 'fullscreen':
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        } else {
+          const container = video.closest('[class*="player"]') || video.parentElement || video;
+          container.requestFullscreen().catch(() => {
+            video.requestFullscreen().catch(() => {});
+          });
+        }
+        break;
+    }
+  });
 })();

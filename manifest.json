@@ -3,7 +3,7 @@
   "name": "TV Remote",
   "version": "1.1.0",
   "description": "A TV remote-style launcher for your favorite free streaming channels. Sync across devices with a PIN.",
-  "permissions": ["storage"],
+  "permissions": ["storage", "activeTab", "tabs"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {

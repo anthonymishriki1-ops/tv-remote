@@ -302,6 +302,39 @@ body {
   color: #ff5555;
 }
 
+/* ── Remote Controls ── */
+.remote-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #222;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 12px 18px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  background: #1a1a2a;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.control-btn:hover {
+  background: #2a2a4a;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(91, 127, 255, 0.2);
+}
+
+.control-btn:active {
+  transform: scale(0.94);
+}
+
 /* ── Empty state ── */
 .empty-msg {
   text-align: center;

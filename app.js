@@ -270,6 +270,25 @@ channelLinkInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') addChannel();
 });
 
+// Remote control buttons — send messages to active tab's content script
+function sendToActiveTab(action) {
+  if (typeof chrome !== 'undefined' && chrome.tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      // Skip the extension popup tab itself
+      const tab = tabs.find(t => !t.url.startsWith('chrome-extension://'));
+      if (tab) {
+        chrome.tabs.sendMessage(tab.id, { action });
+      }
+    });
+  }
+}
+
+document.getElementById('vol-up').addEventListener('click', () => sendToActiveTab('vol-up'));
+document.getElementById('vol-down').addEventListener('click', () => sendToActiveTab('vol-down'));
+document.getElementById('mute-btn').addEventListener('click', () => sendToActiveTab('mute'));
+document.getElementById('play-pause-btn').addEventListener('click', () => sendToActiveTab('play-pause'));
+document.getElementById('fullscreen-btn').addEventListener('click', () => sendToActiveTab('fullscreen'));
+
 // Expose for thumbnail updates
 window.tvRemote = {
   async getChannels() {
