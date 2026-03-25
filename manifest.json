@@ -19,5 +19,12 @@
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self' https://www.gstatic.com; object-src 'self'"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
 }
